@@ -23,7 +23,7 @@ $errorMiddleware->setDefaultErrorHandler(function (\Slim\Http\ServerRequest $req
     ];
 
     $payload = ['error' => $statusError];
-    if (env("APP_DEBUG") == "true") {
+    if (env("APP_DEBUG") === "true") {
         $payload['error']['trace'] = $e->getTrace();
     }
 
