@@ -15,7 +15,7 @@ class SearchEngineRepository
     {
         $this->query = 'SELECT sc.slug as category_slug, sc.id as subcategory_id, sc.category_id as category_id,
          a.name as wallet_name, c.slug as currency_slug, c.icon as currency_icon, p.name as payee_name, p.id as payee_id, 
-         l.name as label_name, l.id as label_id, l.color as label_color, ';
+        cat.icon as category_icon,';
         $this->query .= 'entry.id, entry.date_time, entry.uuid, entry.amount, entry.note, 
         entry.type, entry.waranty, entry.transfer, entry.confirmed, 
         entry.planned, entry.account_id, entry.transfer_id, 
@@ -26,8 +26,7 @@ class SearchEngineRepository
         $this->query .= 'LEFT JOIN accounts a ON entry.account_id = a.id ';
         $this->query .= 'LEFT JOIN currencies c ON entry.currency_id = c.id ';
         $this->query .= 'LEFT JOIN payees p ON entry.payee_id = p.id ';
-        $this->query .= "INNER JOIN entry_labels el ON entry.id = el.entry_id ";
-        $this->query .= "INNER JOIN labels l ON el.labels_id = l.id ";
+        $this->query .= "INNER JOIN categories cat ON sc.category_id = cat.id ";
         $this->query .= "WHERE entry.workspace_id = $wsid AND entry.deleted_at IS NULL ";
 
     }
@@ -50,12 +49,6 @@ class SearchEngineRepository
             return "'$t'";
         }, $type);
         $this->query .= 'AND entry.type in (' . implode(',', $type) . ') ';
-        return $this;
-    }
-
-    public function findByTags(array $tags): self
-    {
-        $this->query .= 'AND l.id in (' . implode(',', $tags) . ') ';
         return $this;
     }
 
@@ -86,6 +79,7 @@ class SearchEngineRepository
     public function get(): array
     {   
         $this->query .= 'ORDER BY entry.date_time DESC';
+
         $result = DB::select($this->query);
         return $result;
     }

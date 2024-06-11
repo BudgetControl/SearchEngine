@@ -3,10 +3,12 @@ namespace Budgetcontrol\SearchEngine\Domain\Model\Entity;
 
 use Budgetcontrol\SearchEngine\Domain\Category;
 use Budgetcontrol\SearchEngine\Domain\Currency;
+use Budgetcontrol\SearchEngine\Domain\Entry;
 use Budgetcontrol\SearchEngine\Domain\Payee;
 use Budgetcontrol\SearchEngine\Domain\Wallet;
 use Budgetcontrol\SearchEngine\Trait\Serializer;
 use Illuminate\Support\Arr;
+use PhpParser\Node\Stmt\Label;
 use stdClass;
 
 /**
@@ -48,6 +50,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
 
         $data = (array) $data;
 
+        $this->uuid = $data['uuid'];
         $this->amount = $data['amount'];
         $this->note = $data['note'];
         $this->type = $data['type'];
@@ -70,7 +73,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
         $this->sub_category = [
             'slug' => $data['category_slug'],
             'id' => $data['subcategory_id'],
-            'category' => Category::find($data['category_id']),
+            'category' => $data['category_icon'],
         ];
 
         $this->payment_type = $data['payment_type'];
@@ -86,21 +89,19 @@ final class EntriesResults implements SearchEngineResultsInterface {
             ];
         } else {
             $this->payee = null;
-        }
+        }   
 
-        if($data['label_id']) {
-            $this->label[0] = [
-                'name' => $data['label_name'],
-                'id' => $data['label_id'],
-                'color' => $data['label_color'],
-            ];
-        }
+        $entry = Entry::find($data['id']);
+        $labels = $entry->labels;
+
+        $this->label = $labels->toArray();
 
     }
 
     public function toArray(): array
     {
         return [
+                'uuid' => $this->uuid,
                 'amount' => $this->amount,
                 'note' => $this->note,
                 'type' => $this->type,

@@ -36,10 +36,6 @@ class SearchEngineService
             $repository->findByType($this->searchField->getType());
         }
 
-        if (!empty($this->searchField->getTags())) {
-            $repository->findByTags($this->searchField->getTags());
-        }
-
         if ($this->searchField->getText() !== null) {
             $repository->findByText($this->searchField->getText());
         }
@@ -52,8 +48,21 @@ class SearchEngineService
 
         foreach ($repository->get() as $result) {
             $data = new EntriesResults($result);
-            $results[] = $data->toArray();
+
+            // filter by tag
+            if(!empty($this->searchField->getTags())) {
+                $tags = $data->getLabel();
+                foreach($tags as $tag) {
+                    if(in_array($tag['id'], $this->searchField->getTags())) {
+                        $results[] = $data->toArray();
+                    }
+                }
+
+            } else {
+                $results[] = $data->toArray();
+            }
         }
+
 
         return $results;
     }
