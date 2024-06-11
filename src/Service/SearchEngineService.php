@@ -2,6 +2,7 @@
 
 namespace Budgetcontrol\SearchEngine\Service;
 
+use Budgetcontrol\SearchEngine\Domain\Model\Entity\EntriesResults;
 use DateTime;
 use Budgetcontrol\SearchEngine\Domain\Model\Entity\SearchField;
 use Budgetcontrol\SearchEngine\Domain\Repository\SearchEngineRepository;
@@ -20,6 +21,7 @@ class SearchEngineService
 
     public function find(): array
     {
+        $results = [];
         $repository = new SearchEngineRepository($this->wsid);
 
         if (!empty($this->searchField->getAccount())) {
@@ -42,14 +44,18 @@ class SearchEngineService
             $repository->findByText($this->searchField->getText());
         }
 
-        if ($this->searchField->isPlanned() === true) {
-            $repository->findByPlanned($this->searchField->isPlanned());
-        }
+        $repository->findByPlanned($this->searchField->isPlanned());
 
         if ($this->searchField->getDate() !== null) {
             $repository->findByDate($this->searchField->getDate());
         }
 
-        return $repository->get();
+        foreach ($repository->get() as $result) {
+            $data = new EntriesResults($result);
+            $results[] = $data->toArray();
+        }
+
+        return $results;
     }
+    
 }

@@ -25,10 +25,9 @@ class SearchController {
         $tags = $body['tags'];
         $text = $body['text'];
         $planned = $body['planned'];
-        $month = $body['month'];
-        $year = $body['year'];
+        $date = $body['date_time'];
 
-        $searchField = new SearchField($account, $category, $type, $tags, $text, $planned, $month, $year);
+        $searchField = new SearchField($account, $category, $type, $tags, $text, $planned, $date );
 
         try {
             $searchEngineService = new SearchEngineService($searchField, $wsid);

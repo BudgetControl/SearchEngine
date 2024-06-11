@@ -13,10 +13,23 @@ class SearchEngineRepository
 
     public function __construct(int $wsid)
     {
-        $this->query = 'SELECT sc.name as category_name, a.name as wallet_name, entry.* FROM ' . self::TABLE . ' as entry ';
-        $this->query .= 'RIGHT JOIN sub_categories sc ON entry.category_id = sc.id ';
-        $this->query .= 'RIGHT JOIN accounts a ON entry.account_id = a.id ';
-        $this->query .= "WHERE entry.workspace_id = $wsid ";
+        $this->query = 'SELECT sc.slug as category_slug, sc.id as subcategory_id, sc.category_id as category_id,
+         a.name as wallet_name, c.slug as currency_slug, c.icon as currency_icon, p.name as payee_name, p.id as payee_id, 
+         l.name as label_name, l.id as label_id, l.color as label_color, ';
+        $this->query .= 'entry.id, entry.date_time, entry.uuid, entry.amount, entry.note, 
+        entry.type, entry.waranty, entry.transfer, entry.confirmed, 
+        entry.planned, entry.account_id, entry.transfer_id, 
+        entry.transfer_relation, entry.currency_id, entry.payment_type, 
+        entry.payee_id, entry.geolocation, entry.workspace_id FROM ' . self::TABLE . ' as entry ';
+        
+        $this->query .= 'INNER JOIN sub_categories sc ON entry.category_id = sc.id ';
+        $this->query .= 'LEFT JOIN accounts a ON entry.account_id = a.id ';
+        $this->query .= 'LEFT JOIN currencies c ON entry.currency_id = c.id ';
+        $this->query .= 'LEFT JOIN payees p ON entry.payee_id = p.id ';
+        $this->query .= "INNER JOIN entry_labels el ON entry.id = el.entry_id ";
+        $this->query .= "INNER JOIN labels l ON el.labels_id = l.id ";
+        $this->query .= "WHERE entry.workspace_id = $wsid AND entry.deleted_at IS NULL ";
+
     }
 
     public function findByAccount(array $account): self
@@ -42,6 +55,7 @@ class SearchEngineRepository
 
     public function findByTags(array $tags): self
     {
+        $this->query .= 'AND l.id in (' . implode(',', $tags) . ') ';
         return $this;
     }
 
