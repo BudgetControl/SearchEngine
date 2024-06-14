@@ -73,7 +73,9 @@ final class EntriesResults implements SearchEngineResultsInterface {
         $this->sub_category = [
             'slug' => $data['category_slug'],
             'id' => $data['subcategory_id'],
-            'category' => $data['category_icon'],
+            'category' => [
+                'icon' => $data['category_icon'],
+            ],
         ];
 
         $this->payment_type = $data['payment_type'];
@@ -95,6 +97,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
         $labels = $entry->labels;
 
         $this->label = $labels->toArray();
+        $this->date_time = $data['date_time'];
 
     }
 
@@ -102,6 +105,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
     {
         return [
                 'uuid' => $this->uuid,
+                'date_time' => $this->date_time,
                 'amount' => $this->amount,
                 'note' => $this->note,
                 'type' => $this->type,
