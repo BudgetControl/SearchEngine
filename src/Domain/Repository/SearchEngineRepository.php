@@ -23,7 +23,7 @@ class SearchEngineRepository
         entry.payee_id, entry.geolocation, entry.workspace_id FROM ' . self::TABLE . ' as entry ';
         
         $this->query .= 'INNER JOIN sub_categories sc ON entry.category_id = sc.id ';
-        $this->query .= 'LEFT JOIN accounts a ON entry.account_id = a.id ';
+        $this->query .= 'LEFT JOIN wallets a ON entry.account_id = a.id ';
         $this->query .= 'LEFT JOIN currencies c ON entry.currency_id = c.id ';
         $this->query .= 'LEFT JOIN payees p ON entry.payee_id = p.id ';
         $this->query .= "INNER JOIN categories cat ON sc.category_id = cat.id ";
