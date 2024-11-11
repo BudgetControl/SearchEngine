@@ -30,7 +30,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
     private bool $waranty;
     private int $workspace_id;
 
-    private array $account;
+    private array $wallet;
     private array $sub_category;
     private array $currency;
     private ?array $payee;
@@ -60,7 +60,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
         $this->planned = (bool) $data['planned'];
         $this->installment = (int) $data['installment'];
         $this->model_id = $data['model_id'];
-        $this->account = [
+        $this->wallet = [
             'name' => $data['wallet_name'],
         ];
         $this->transfer_id = $data['transfer_id'];
@@ -115,7 +115,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
                 'planned' => $this->planned,
                 'installment' => $this->installment,
                 'model_id' => $this->model_id,
-                'account' => $this->account,
+                'wallet' => $this->wallet,
                 'transfer_id' => $this->transfer_id,
                 'transfer_relation' => $this->transfer_relation,
                 'currency' => $this->currency,
@@ -135,9 +135,9 @@ final class EntriesResults implements SearchEngineResultsInterface {
         return json_encode($this->toArray());
     }
 
-    public function getAccount(): array
+    public function getWallet(): array
     {
-        return $this->account;
+        return $this->wallet;
     }
 
     public function getAmount(): float
