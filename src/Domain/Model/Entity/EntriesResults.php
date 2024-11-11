@@ -42,7 +42,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
     private ?string $note;
     private ?int $model_id;
 
-    private array $label = [];
+    private array $labels = [];
     
     public function __construct(
         array|stdClass $data
@@ -96,7 +96,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
         $entry = Entry::find($data['id']);
         $labels = $entry->labels;
 
-        $this->label = $labels->toArray();
+        $this->labels = $labels->toArray();
         $this->date_time = $data['date_time'];
 
     }
@@ -126,7 +126,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
                 'workspace_id' => $this->workspace_id,
                 'exclude_from_stats' => $this->exclude_from_stats,
                 'payee' => $this->payee,
-                'label' => $this->label,
+                'labels' => $this->label,
         ];
     }
 
@@ -258,6 +258,6 @@ final class EntriesResults implements SearchEngineResultsInterface {
      */
     public function getLabel(): ?array
     {
-        return $this->label;
+        return $this->labels;
     }
 }
