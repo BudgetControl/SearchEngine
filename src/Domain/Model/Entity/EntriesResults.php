@@ -126,7 +126,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
                 'workspace_id' => $this->workspace_id,
                 'exclude_from_stats' => $this->exclude_from_stats,
                 'payee' => $this->payee,
-                'labels' => $this->label,
+                'labels' => $this->labels,
         ];
     }
 
