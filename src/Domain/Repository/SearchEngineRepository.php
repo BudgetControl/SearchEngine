@@ -61,10 +61,8 @@ class SearchEngineRepository
 
     public function findByPlanned(bool $planned): self
     {
-        if ($planned === true) {
-            $this->query .= 'AND entry.planned in (0,1) ';
-        } else {
-            $this->query .= 'AND entry.planned = 0 ';
+        if ($planned === false) {
+            $this->query .= 'AND entry.planned = false ';
         }
         
         return $this;
