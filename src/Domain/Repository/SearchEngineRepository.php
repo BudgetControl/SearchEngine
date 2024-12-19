@@ -77,7 +77,7 @@ class SearchEngineRepository
     public function get(): array
     {   
         $this->query .= 'ORDER BY entry.date_time DESC';
-
+        \Illuminate\Support\Facades\Log::debug("Query". $this->query);
         $result = DB::select($this->query);
         return $result;
     }
