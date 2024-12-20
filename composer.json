@@ -7,6 +7,10 @@
         "source": {
             "type": "vcs",
             "url": "https://github.com/mlabfactory/phpunit-self-api-integration.git"
+        },
+        "budgetcontrol/cryptable" : {
+            "type":"vcs",
+            "url":"git@github.com:BudgetControl/LibsCryptable.git"
         }
     },
     "require": {
@@ -27,7 +31,8 @@
         "symfony/property-access": "^7.0",
         "illuminate/filesystem": "^11.0",
         "nesbot/carbon": "^3.2",
-        "logtail/monolog-logtail": "^3.1"
+        "logtail/monolog-logtail": "^3.1",
+        "budgetcontrol/cryptable": "^0.1.0"
     },
     "require-dev": {
         "nikic/php-parser": "^5.0",

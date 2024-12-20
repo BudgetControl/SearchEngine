@@ -30,3 +30,8 @@ Facade::setFacadeApplication([
     'log' => $logger,
     'date' => new Date()
 ]);
+
+// Check application environment
+if(env('APP_KEY') === null) {
+    throw new Exception('APP_KEY not set');
+}

@@ -1,20 +1,16 @@
 <?php
 namespace Budgetcontrol\SearchEngine\Domain\Model\Entity;
 
-use Budgetcontrol\SearchEngine\Domain\Category;
-use Budgetcontrol\SearchEngine\Domain\Currency;
 use Budgetcontrol\SearchEngine\Domain\Entry;
-use Budgetcontrol\SearchEngine\Domain\Payee;
-use Budgetcontrol\SearchEngine\Domain\Wallet;
-use Budgetcontrol\SearchEngine\Trait\Serializer;
-use Illuminate\Support\Arr;
-use PhpParser\Node\Stmt\Label;
+use BudgetcontrolLibs\Crypt\Traits\Crypt;
 use stdClass;
 
 /**
  * Represents the results of a search query for entries.
  */
 final class EntriesResults implements SearchEngineResultsInterface {
+
+    use Crypt;
 
     private float $amount;
     private bool $confirmed;
@@ -47,6 +43,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
     public function __construct(
         array|stdClass $data
     ) {
+        $this->key = env('APP_KEY');
 
         $data = (array) $data;
 
@@ -61,7 +58,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
         $this->installment = (int) $data['installment'];
         $this->model_id = $data['model_id'];
         $this->wallet = [
-            'name' => $data['wallet_name'],
+            'name' => $this->decrypt($data['wallet_name']),
         ];
         $this->transfer_id = $data['transfer_id'];
         $this->transfer_relation = $data['transfer_relation'];
