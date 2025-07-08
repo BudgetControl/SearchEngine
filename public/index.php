@@ -1,13 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Log;
 
 require_once __DIR__ . "/../bootstrap/app.php";
 
-$ip = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0] : $_SERVER['REMOTE_ADDR'] ?? '';
-$ipAllowed = explode(',', env('IP_ALLOWLIST'));
-\Illuminate\Support\Facades\Log::debug('IP Address: ' . $ip);
-
-if (!in_array($ip, $ipAllowed) || $_SERVER['HTTP_X_API_SECRET'] !== env('SECRET_KEY')) {
+if ($_SERVER['HTTP_X_API_SECRET'] !== env('SECRET_KEY') && env('APP_ENV') !== 'local') {
     http_response_code(403);
     echo 'Access Denied - You are not allowed to access this resource.';
     exit;
