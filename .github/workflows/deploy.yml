@@ -11,28 +11,37 @@ permissions:
 jobs:
   deploy_job:
     runs-on: ubuntu-latest
-    environment: prod
+    environment: dev
     name: deploy
     steps:
         - name: Checkout
           uses: actions/checkout@v2
-        - name: deploy file
-          uses: wlixcc/SFTP-Deploy-Action@v1.2.4
           with:
-              username: ${{ secrets.SFTP_USER }} 
-              server: ${{ secrets.SFTP_HOST }} 
-              ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} 
-              password: ${{ secrets.SFTP_PASSWORD }} 
-              local_path: '.'
-              remote_path: ${{ secrets.SFTP_DEPLOY_PATH }} 
-              sftpArgs: '-o ConnectTimeout=5'
-  
+            fetch-depth: 1
+        - name: Setup PHP
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: '8.2'
+            extensions: curl, json, mbstring, zip
+            tools: composer
+            
+        - name: Setup Node.js
+          uses: actions/setup-node@v3
+          with:
+            node-version: '18'
+            
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v2
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ secrets.AWS_REGION }}
 
-        - name: executing composer install
-          uses: appleboy/ssh-action@v1.0.3
-          with:
-            host: ${{ secrets.SFTP_HOST }}
-            username: ${{ secrets.SFTP_USER }}
-            password: ${{ secrets.SFTP_PASSWORD }}
-            port: 22
-            script: docker exec budgetcontrol-ms-jobs composer install
+        - name: Install Composer dependencies
+          run: composer install --no-dev --optimize-autoloader
+          
+        - name: Install Serverless Framework
+          run: npm install -g serverless
+          
+        - name: Deploy to AWS Lambda
+          run: serverless deploy --stage prod --verbose
