@@ -24,11 +24,15 @@ $capsule->setAsGlobal();
 // Set up log tail
 require_once __DIR__ . '/../config/logger.php';
 
+require_once __DIR__ . '/../config/cache.php';
+
+
 
 // Set up the Facade application
 Facade::setFacadeApplication([
     'log' => $logger,
-    'date' => new Date()
+    'date' => new Date(),
+    'cache' => $cache,
 ]);
 
 // Check application environment

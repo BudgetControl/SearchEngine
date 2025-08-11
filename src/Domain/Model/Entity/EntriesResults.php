@@ -49,7 +49,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
 
         $this->uuid = $data['uuid'];
         $this->amount = $data['amount'];
-        $this->note = $data['note'];
+        $this->note = $this->decrypt($data['note']);
         $this->type = $data['type'];
         $this->waranty = (bool) $data['waranty'];
         $this->transfer = (bool) $data['transfer'];

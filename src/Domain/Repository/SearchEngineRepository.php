@@ -1,6 +1,7 @@
 <?php
 namespace Budgetcontrol\SearchEngine\Domain\Repository;
 
+use Budgetcontrol\SearchEngine\Domain\Model\Entity\Keywords;
 use DateTime;
 use Budgetcontrol\SearchEngine\Domain\Model\Entity\SearchField;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -52,10 +53,22 @@ class SearchEngineRepository
         return $this;
     }
 
-    public function findByText(string $text): self
+    public function findByText(Keywords $keys): self
     {
-        $text = addslashes($text); // Prevent SQL injection (not the best way to do it, but it's a start
-        $this->query .= "AND entry.note LIKE '%$text%' ";
+        $query = 'SELECT entry_id, keyword, score
+                FROM entries_keywords
+                WHERE keyword in (' . implode(',', array_map(fn($k) => "'$k'", $keys->getKeywords())) . ')
+                ORDER BY score DESC; ';
+
+        $result = DB::select($query);
+
+        if (empty($result)) {
+            return $this;
+        }
+
+        $ids = array_map(fn($r) => $r->entry_id, $result);
+        $this->query .= 'AND entry.id in (' . implode(',', $ids) . ') ';
+
         return $this;
     }
 

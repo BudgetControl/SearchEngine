@@ -8,9 +8,22 @@
             "type": "vcs",
             "url": "https://github.com/mlabfactory/phpunit-self-api-integration.git"
         },
-        "budgetcontrol/cryptable" : {
+        "budgetcontrol/schema-registry-service": {
+            "type": "vcs",
+            "url": "https://github.com/BudgetControl/Schema-Registry-Service.git"
+        },
+        "budgetcontrol/cryptable":{
             "type":"vcs",
-            "url":"git@github.com:BudgetControl/LibsCryptable.git"
+            "url":"https://github.com/BudgetControl/LibsCryptable.git"
+        },
+        "budgetcontrol/seeds-test-libs":
+        {
+            "type":"vcs",
+            "url":"https://github.com/BudgetControl/SeedsTestLibs.git"
+        },
+        "budgetcontrol/library" : {
+            "type":"vcs",
+            "url":"https://github.com/BudgetControl/Library.git"
         }
     },
     "require": {
@@ -32,8 +45,12 @@
         "illuminate/filesystem": "^11.0",
         "nesbot/carbon": "^3.2",
         "logtail/monolog-logtail": "^3.1",
-        "budgetcontrol/cryptable": "^0.1.0",
-        "bref/bref": "~2.4.1"
+        "budgetcontrol/cryptable": "^v0.2",
+        "bref/bref": "~2.4.1",
+        "budgetcontrol/library": "~v1.5",
+        "donatello-za/rake-php-plus": "^2.0",
+        "predis/predis": "^3.2",
+        "illuminate/cache": "^v11.45"
     },
     "require-dev": {
         "nikic/php-parser": "^5.0",

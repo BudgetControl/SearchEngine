@@ -3,6 +3,16 @@ provider:
   name: aws
   region: eu-west-1
   runtime: provided.al2
+  environment:
+    APP_ENV: production
+    DB_CONNECTION: ${{env.DB_CONNECTION}}
+    DB_HOST: ${{env.DB_HOST}}
+    DB_PORT: ${{env.DB_PORT}}
+    DB_DATABASE: ${{env.DB_DATABASE}}
+    DB_USERNAME: ${{env.DB_USERNAME}}
+    DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+    SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    LOG_CHANNEL: stderr
   deploymentBucket:
     name: serverless-framework-deployments-eu-west-1-41d5edce-535f
 plugins:
