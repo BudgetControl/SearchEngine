@@ -18,7 +18,7 @@ final class EntriesResults implements SearchEngineResultsInterface {
     private bool $exclude_from_stats;
     private int $id;
     private int $installment;
-    private int $payment_type;
+    private array $payment_type;
     private bool $planned;
     private bool $transfer;
     private string $type;
@@ -75,7 +75,9 @@ final class EntriesResults implements SearchEngineResultsInterface {
             ],
         ];
 
-        $this->payment_type = $data['payment_type'];
+        $this->payment_type = [
+            'id' => $data['payment_type'],
+        ];
         $this->payee_id = $data['payee_id'];
         $this->geolocation = $data['geolocation'];
         $this->workspace_id = $data['workspace_id'];

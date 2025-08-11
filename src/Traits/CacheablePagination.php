@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Cache;
 
 trait CacheablePagination
 {
-    private int $cacheExpiration = 3600; // 1 ora
+    private int $cacheExpiration = 10 * 60; // 10 minutes
 
     /**
      * Genera una chiave cache unica basata sui parametri di ricerca

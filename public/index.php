@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Log;
 
 require_once __DIR__ . "/../bootstrap/app.php";
 
-if ($_SERVER['HTTP_X_API_KEY'] !== env('SECRET_KEY') && env('APP_ENV') !== 'local') {
+if ($_SERVER['HTTP_X_API_SECRET'] !== env('SECRET_KEY') && env('APP_ENV') !== 'local') {
     http_response_code(403);
     echo 'Access Denied - You are not allowed to access this resource.';
     exit;
