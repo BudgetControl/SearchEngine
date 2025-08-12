@@ -147,16 +147,16 @@
         },
         {
             "name": "budgetcontrol/cryptable",
-            "version": "v0.2",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BudgetControl/LibsCryptable.git",
-                "reference": "21e35ee1b3a571979b12a9bf3c8e6c973c411dde"
+                "reference": "04e0964a9ec0a9543f8f8a41d28717e5884df6af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BudgetControl/LibsCryptable/zipball/21e35ee1b3a571979b12a9bf3c8e6c973c411dde",
-                "reference": "21e35ee1b3a571979b12a9bf3c8e6c973c411dde",
+                "url": "https://api.github.com/repos/BudgetControl/LibsCryptable/zipball/04e0964a9ec0a9543f8f8a41d28717e5884df6af",
+                "reference": "04e0964a9ec0a9543f8f8a41d28717e5884df6af",
                 "shasum": ""
             },
             "require": {
@@ -185,10 +185,10 @@
             ],
             "description": "The cryptable package",
             "support": {
-                "source": "https://github.com/BudgetControl/LibsCryptable/tree/v0.2",
+                "source": "https://github.com/BudgetControl/LibsCryptable/tree/v0.2.1",
                 "issues": "https://github.com/BudgetControl/LibsCryptable/issues"
             },
-            "time": "2025-08-11T11:57:18+00:00"
+            "time": "2025-08-12T08:22:57+00:00"
         },
         {
             "name": "budgetcontrol/library",
