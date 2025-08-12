@@ -9,8 +9,8 @@ final class Keywords
 {
     use Hash;
 
-    private array $keywords;
-    private array $score;
+    private array $keywords = [];
+    private array $score = [];
 
     public function __construct(array $keyword, array $score = [0.0])
     {

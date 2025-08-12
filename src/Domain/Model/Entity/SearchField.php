@@ -14,7 +14,7 @@ final class SearchField {
     private bool $planned;
     private ?array $dateTime;
 
-    public function __construct(?array $account, ?array $category, ?array $type, ?array $tags, ?Keywords $text, ?bool $planned, ?array $dateTime)
+    public function __construct(?array $account, ?array $category, ?array $type, ?array $tags, ?Keywords $text = null, ?bool $planned = false, ?array $dateTime = null)
     {
         $this->account = $account;
         $this->category = $category;

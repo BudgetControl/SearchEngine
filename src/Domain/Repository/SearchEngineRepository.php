@@ -55,6 +55,10 @@ class SearchEngineRepository
 
     public function findByText(Keywords $keys): self
     {
+        if (empty($keys->getKeywords())) {
+            return $this;
+        }
+
         $query = 'SELECT entry_id, keyword, score
                 FROM entries_keywords
                 WHERE keyword in (' . implode(',', array_map(fn($k) => "'$k'", $keys->getKeywords())) . ')
